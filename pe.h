@@ -29,18 +29,28 @@ SC_MODULE(PE_base)
 
 	virtual ~PE_base() {}
 
+	//functions for P1_Q1
+
+	//use this function to initialize the PE
+	//Implemented:
+	//(1)linkNotEmpty = 0 ;
+	//(2)firedTimesPI = 0;	
+	//(3)firedTimesPO = 0;
+	void init();
+	//counters for P1_Q1
+	int firedTimes[2];
+	int linkNotEmpty;
+
 protected:
 	std::list<packet> out_queue_; // output queue
 	packet packet_in_; // incoming packet from the router
 
 	int x_, y_; // location of the PE
 
-	int linkNotEmpty;
-
-
 	virtual void read_input(); // read a packet from the the router
 	virtual void execute() = 0; // abstraction of computations
 	virtual void write_output(); // // send a packet to the router
+
 }; // PE_base
 
 // for PI and PO
@@ -50,21 +60,12 @@ public:
 	PE_IO(const char *name) : PE_base(name) {}
 
 protected:
-	//counters for P1_Q1
-	int firedTimesPI;
-	int firedTimesPO;
-
 	void execute();
 
 	void fire_PI();
 	void fire_PO();
 
-	//use this function to initialize the PE_IO
-	//Implemented:
-	//(1)linkNotEmpty = 0 ;
-	//(2)firedTimesPI = 0;	
-	//(3)firedTimesPO = 0;
-	void init();
+
 }; // class PE_IO
 
 // for P1
@@ -74,18 +75,12 @@ public:
 	PE_inc(const char *name) : PE_base(name) {}
 
 protected:
-	//counters for P1_Q1
-	int firedTimes;
 
 	void execute();
 
 	void fire();
 
-	//use this function to initialize the PE_inc
-	//Implemented:
-	//(1)linkNotEmpty = 0 ;
-	//(2)firedTimes = 0;
-	void init();
+
 };
 
 #endif // PE_H

@@ -47,7 +47,8 @@ void router::read_packet(int iport)
 		return; // empty packet
 
 	route_packet_xy(p);
-	linkNotEmpty[iport]++; //Every time the link is read not empty, the corresponding link counter increases by 1.
+	//Every time the link is read not empty, the corresponding link counter increases by 1.
+	linkNotEmpty[iport]++; 
 }
 
 void router::write_packet(int iport)
@@ -92,8 +93,8 @@ void router::route_packet_xy(packet p)
 
 void router::init()
 {
-	linkNotEmpty[PE] = 0;
-	linkNotEmpty[NORTH] = 0;
+	linkNotEmpty[0] = 0;
+	linkNotEmpty[1] = 0;
 	linkNotEmpty[SOUTH] = 0;
 	linkNotEmpty[EAST] = 0;
 	linkNotEmpty[WEST] = 0;

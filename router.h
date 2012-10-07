@@ -53,12 +53,13 @@ SC_MODULE(router)
 	//implemented:
 	//(1)linkNotEmpty = {0};
 	void init();
+	//counters for P1_Q1
+	int linkNotEmpty[PORTS];
 
 protected:
 	std::list<packet> out_queue_[PORTS]; // output queues
 	
 	int x_, y_; // location of the router
-	int linkNotEmpty[PORTS];
 
 	void read_packet(int iport); // read a packet from the link
 	void write_packet(int iport); // write a packet to the link

@@ -12,6 +12,11 @@ void PE_base::set_xy(int x, int y)
 void PE_base::read_input()
 {
 	packet_in_ = data_in.read();
+	//Every time the link is read not empty, the corresponding link counter increases by 1.
+	//for P1_Q1
+	if((packet_in_.src_x != -1)&&(packet_in_.src_y != -1))
+		linkNotEmpty++; 
+
 }
 
 void PE_base::write_output()
@@ -50,6 +55,8 @@ void PE_IO::fire_PI()
 		p.token, p.dest_x, p.dest_y);
 
 	out_queue_.push_back(p);
+	//increase counter for P1_Q1
+	firedTimes[0]++;
 }
 
 void PE_IO::fire_PO()
@@ -59,13 +66,8 @@ void PE_IO::fire_PO()
 
 	printf("PO: receive %d from (%d,%d)\n",
 		packet_in_.token, packet_in_.src_x,	packet_in_.src_y);
-}
-
-void PE_IO::init()
-{
-	linkNotEmpty = 0;
-	firedTimesPI = 0;
-	firedTimesPO = 0;
+	//increase counter for P1_Q1
+	firedTimes[1]++;
 }
 
 void PE_inc::execute()
@@ -90,9 +92,12 @@ void PE_inc::fire()
 		p.token, p.dest_x, p.dest_y);
 
 	out_queue_.push_back(p);
+	//increase counter for P1_Q1
+	firedTimes[0]++;
 }
-void PE_inc::init()
+void PE_base::init()
 {
 	linkNotEmpty = 0;
-	firedTimes = 0;
+	firedTimes[0] = 0;
+	firedTimes[1] = 0;
 }
