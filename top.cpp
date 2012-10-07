@@ -127,8 +127,8 @@ protected:
 			
 			
 			//init router counters for P1_Q1
-			routers[0]->init();
-			routers[1]->init();
+			routers[i]->init();
+
 
 			// loop unused ports
 			routers[i]->port_in[router::NORTH](
@@ -206,7 +206,7 @@ int sc_main(int argc , char *argv[])
 	//Methods for Project 1
 	//Question 1
 	top_module.getUtilizationData(20, P1_Q1);
-	printf("Utilization Rate for P1: \%%4.2f", P1_Q1->P_PEinc);
+	printf("Utilization Rate for P1: %4.2f", P1_Q1->P_PEinc);
 
 	return 0;
 }
