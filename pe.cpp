@@ -61,6 +61,13 @@ void PE_IO::fire_PO()
 		packet_in_.token, packet_in_.src_x,	packet_in_.src_y);
 }
 
+void PE_IO::init()
+{
+	linkNotEmpty = 0;
+	firedTimesPI = 0;
+	firedTimesPO = 0;
+}
+
 void PE_inc::execute()
 {
 	// fire the actor if the incoming packet is valid
@@ -83,4 +90,9 @@ void PE_inc::fire()
 		p.token, p.dest_x, p.dest_y);
 
 	out_queue_.push_back(p);
+}
+void PE_inc::init()
+{
+	linkNotEmpty = 0;
+	firedTimes = 0;
 }

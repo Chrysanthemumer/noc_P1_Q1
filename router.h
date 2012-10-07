@@ -49,10 +49,16 @@ SC_MODULE(router)
 	// use this function to set the coordinates of the router
 	void set_xy(int x, int y);
 
+	//use this function to initialize the router
+	//implemented:
+	//(1)linkNotEmpty = {0};
+	void init();
+
 protected:
 	std::list<packet> out_queue_[PORTS]; // output queues
-
+	
 	int x_, y_; // location of the router
+	int linkNotEmpty[PORTS];
 
 	void read_packet(int iport); // read a packet from the link
 	void write_packet(int iport); // write a packet to the link

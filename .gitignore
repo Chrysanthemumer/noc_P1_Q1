@@ -1,0 +1,9 @@
+Debug/
+ipch/
+noc_P1_Q1/
+*.opensdf
+*.sdf
+*.sln
+*.suo
+
+
