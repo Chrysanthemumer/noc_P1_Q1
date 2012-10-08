@@ -73,8 +73,8 @@ public:
 	void getUtilizationData(float totalClock, utilizationData * returnStruct)
 	{
 		//get values
-		returnStruct->pe2rtr[0] = routers[0]->linkNotEmpty[0];
-		returnStruct->pe2rtr[1] = routers[1]->linkNotEmpty[0];
+		returnStruct->pe2rtr[0] = routers[0]->linkNotEmpty[router::PE];
+		returnStruct->pe2rtr[1] = routers[1]->linkNotEmpty[router::PE];
 
 		returnStruct->rtr2pe[0] = pes[0]->linkNotEmpty;
 		returnStruct->rtr2pe[1] = pes[1]->linkNotEmpty;
@@ -82,6 +82,10 @@ public:
 		returnStruct->PEIO[0] = pes[0]->firedTimes[0];
 		returnStruct->PEIO[1] = pes[0]->firedTimes[1];
 		returnStruct->PEinc = pes[1]->firedTimes[0];
+
+		returnStruct->rtr2rtrE[0] = routers[1]->linkNotEmpty[router::WEST];
+		returnStruct->rtr2rtrW[0] = routers[0]->linkNotEmpty[router::EAST];
+
 		//calculate rates
 		returnStruct->P_pe2rtr[0] = (float)returnStruct->pe2rtr[0]/totalClock;
 		returnStruct->P_pe2rtr[1] = (float)returnStruct->rtr2pe[0]/totalClock;
@@ -92,6 +96,9 @@ public:
 		returnStruct->P_PEIO[0] = (float)returnStruct->PEIO[0]/totalClock;
 		returnStruct->P_PEIO[1] = (float)returnStruct->PEIO[1]/totalClock;
 		returnStruct->P_PEinc = (float)returnStruct->PEinc/totalClock;
+
+		returnStruct->P_rtr2rtrE[0] = routers[1]->linkNotEmpty[router::WEST]/totalClock;
+		returnStruct->P_rtr2rtrW[0] = routers[0]->linkNotEmpty[router::EAST]/totalClock;
 
 		return;
 	}
@@ -193,7 +200,7 @@ int sc_main(int argc , char *argv[])
 	printf("cycle  0 ================================\n");
 	sc_start(0, SC_NS);
 
-	for(int i = 1; i < 20; i++){
+	for(int i = 1; i < 2000; i++){
 		
 		printf("cycle %2d ================================\n", i);
 
@@ -205,8 +212,17 @@ int sc_main(int argc , char *argv[])
 
 	//Methods for Project 1
 	//Question 1
-	top_module.getUtilizationData(20, P1_Q1);
-	printf("Utilization Rate for P1: %4.2f", P1_Q1->P_PEinc);
-
+	top_module.getUtilizationData(2000, P1_Q1);
+	printf("Utilization Rate for P1: %%%3.2f\n", P1_Q1->P_PEinc*100);
+	printf("Utilization Rate for PI: %%%3.2f\n", P1_Q1->P_PEIO[0]*100);
+	printf("Utilization Rate for PO: %%%3.2f\n", P1_Q1->P_PEIO[1]*100);
+	printf("For abstract link \'a\':\n");
+	printf("Utilization Rate for C-Link pe_to_router[0]: %%%3.2f\n", P1_Q1->P_pe2rtr[0]*100);
+	printf("Utilization Rate for C-Link router_to_router_east[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrE[0]*100);
+	printf("Utilization Rate for C-Link router_to_pe[1]: %%%3.2f\n", P1_Q1->P_rtr2pe[1]*100);
+	printf("For abstract link \'b\':\n");
+	printf("Utilization Rate for C-Link pe_to_router[1]: %%%3.2f\n", P1_Q1->P_pe2rtr[1]*100);
+	printf("Utilization Rate for C-Link router_to_router_wast[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrW[0]*100);
+	printf("Utilization Rate for C-Link router_to_pe[0]: %%%3.2f\n", P1_Q1->P_rtr2pe[0]*100);
 	return 0;
 }
