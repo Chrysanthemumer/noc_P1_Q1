@@ -196,11 +196,22 @@ int sc_main(int argc , char *argv[])
 
 	//Data for Project 1
 	utilizationData * P1_Q1 = new utilizationData();
+	int runtime;
+
+	//Banner
+	printf("*********************************************\n");
+	printf("*             ECE 587  Fall 2012            *\n");
+	printf("*                  Project 1                *\n");
+	printf("*   Part 1 - Two PEs                        *\n");
+	printf("*                                           *\n");
+	printf("*    Sizhou Wang A20249772                  *\n");
+	printf("*    Thank You !                            *\n");
+	printf("*********************************************\n");
 
 	printf("cycle  0 ================================\n");
 	sc_start(0, SC_NS);
 
-	for(int i = 1; i < 20; i++){
+	for(int i = 1; i < runtime; i++){
 		
 		printf("cycle %2d ================================\n", i);
 
@@ -210,25 +221,31 @@ int sc_main(int argc , char *argv[])
 		sc_start(10, SC_NS);
 	}
 
+
+
+
 	//Methods for Project 1
 	//Question 1
-	top_module.getUtilizationData(20, P1_Q1);
-	printf("Utilization Rate for P1: %%%3.2f\n", P1_Q1->P_PEinc*100);
-	printf("Utilization Rate for PI: %%%3.2f\n", P1_Q1->P_PEIO[0]*100);
-	printf("Utilization Rate for PO: %%%3.2f\n", P1_Q1->P_PEIO[1]*100);
+	printf("\n            > > Utilization Rate : %d cycles < <\n", runtime);
+	top_module.getUtilizationData(runtime, P1_Q1);
+	printf("                        P1: %%%3.2f\n", P1_Q1->P_PEinc*100);
+	printf("                        PI: %%%3.2f\n", P1_Q1->P_PEIO[0]*100);
+	printf("                        PO: %%%3.2f\n", P1_Q1->P_PEIO[1]*100);
 	printf("For abstract link \'a\':\n");
-	printf("Utilization Rate for C-Link pe_to_router[0]: %%%3.2f\n", P1_Q1->P_pe2rtr[0]*100);
-	printf("Utilization Rate for C-Link router_to_router_east[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrE[0]*100);
-	printf("Utilization Rate for C-Link router_to_pe[1]: %%%3.2f\n", P1_Q1->P_rtr2pe[1]*100);
+	printf("           pe_to_router[0]: %%%3.2f\n", P1_Q1->P_pe2rtr[0]*100);
+	printf("  router_to_router_east[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrE[0]*100);
+	printf("           router_to_pe[1]: %%%3.2f\n", P1_Q1->P_rtr2pe[1]*100);
 	printf("For abstract link \'b\':\n");
-	printf("Utilization Rate for C-Link pe_to_router[1]: %%%3.2f\n", P1_Q1->P_pe2rtr[1]*100);
-	printf("Utilization Rate for C-Link router_to_router_wast[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrW[0]*100);
-	printf("Utilization Rate for C-Link router_to_pe[0]: %%%3.2f\n", P1_Q1->P_rtr2pe[0]*100);
-
+	printf("           pe_to_router[1]: %%%3.2f\n", P1_Q1->P_pe2rtr[1]*100);
+	printf("  router_to_router_wast[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrW[0]*100);
+	printf("           router_to_pe[0]: %%%3.2f\n", P1_Q1->P_rtr2pe[0]*100);
 	//Question 2
-
-
-
+	printf("\n            > > Queue Size : %d cycles < <\n", runtime);	
+	printf("Queue size is monitored every cycle though out all %d cycles.\n", runtime);		
+	printf("It is determined by the max value during the life time of each unit.Files containing these data can be found under the same folder.\n");			
+	printf("WARNNING: Existing file will be overwritten!\n\n");	
+	printf("Router : router_x_y_OutQueue_SOUTH.txt\n");		
+	printf("    PE : PE_x_y_OutQueue.txt\n");	
 
 	return 0;
 }
