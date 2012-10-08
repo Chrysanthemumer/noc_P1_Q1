@@ -207,6 +207,9 @@ int sc_main(int argc , char *argv[])
 	printf("*    Sizhou Wang A20249772                  *\n");
 	printf("*    Thank You !                            *\n");
 	printf("*********************************************\n");
+	
+	printf("\nPlease enter the number of cycles to run >>>");
+	scanf("%d", &runtime);
 
 	printf("cycle  0 ================================\n");
 	sc_start(0, SC_NS);
