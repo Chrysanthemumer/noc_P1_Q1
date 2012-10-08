@@ -17,6 +17,7 @@ SC_MODULE(PE_base)
 		execute();
 		queueSize2File();//the queue size shall be calculated after read before write
 		write_output();
+		utilization2File();
 	}
 
 	SC_CTOR(PE_base)
@@ -38,7 +39,7 @@ SC_MODULE(PE_base)
 	//(1)linkNotEmpty = 0 ;
 	//(2)firedTimesPI = 0;	
 	//(3)firedTimesPO = 0;
-	void init();
+	virtual void init() = 0;
 	//counters for P1_Q1
 	int firedTimes[2];
 	int linkNotEmpty;
@@ -46,6 +47,7 @@ SC_MODULE(PE_base)
 	//functions for P1_Q2
 	void getQueueSize(int * size);
 	void queueSize2File();
+	
 
 protected:
 	std::list<packet> out_queue_; // output queue
@@ -56,7 +58,8 @@ protected:
 	virtual void read_input(); // read a packet from the the router
 	virtual void execute() = 0; // abstraction of computations
 	virtual void write_output(); // // send a packet to the router
-
+	//functions for P1_Q1
+	virtual void utilization2File() = 0;
 }; // PE_base
 
 // for PI and PO
@@ -64,13 +67,14 @@ class PE_IO : public PE_base
 {
 public:
 	PE_IO(const char *name) : PE_base(name) {}
-
+		
+	void init();
 protected:
 	void execute();
 
 	void fire_PI();
 	void fire_PO();
-
+	void utilization2File();
 
 }; // class PE_IO
 
@@ -79,13 +83,14 @@ class PE_inc : public PE_base
 {
 public:
 	PE_inc(const char *name) : PE_base(name) {}
-
+	void init();
+	
 protected:
 
 	void execute();
 
 	void fire();
-
+	void utilization2File();
 
 };
 

@@ -101,7 +101,7 @@ void router::init()
 	linkNotEmpty[SOUTH] = 0;
 	linkNotEmpty[EAST] = 0;
 	linkNotEmpty[WEST] = 0;
-
+	//init queue size file
 	char filename[5][256];
 	sprintf(filename[0], "router_%d_%d_OutQueue_PE.txt", x_, y_);
 	sprintf(filename[1], "router_%d_%d_OutQueue_NORTH.txt", x_, y_);

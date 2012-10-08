@@ -87,18 +87,18 @@ public:
 		returnStruct->rtr2rtrW[0] = routers[0]->linkNotEmpty[router::EAST];
 
 		//calculate rates
-		returnStruct->P_pe2rtr[0] = (float)returnStruct->pe2rtr[0]/totalClock;
-		returnStruct->P_pe2rtr[1] = (float)returnStruct->rtr2pe[0]/totalClock;
+		returnStruct->P_pe2rtr[0] = (float)returnStruct->pe2rtr[0]/(float)totalClock;
+		returnStruct->P_pe2rtr[1] = (float)returnStruct->rtr2pe[0]/(float)totalClock;
 
-		returnStruct->P_rtr2pe[0] = (float)returnStruct->rtr2pe[0]/totalClock;
-		returnStruct->P_rtr2pe[1] = (float)returnStruct->rtr2pe[1]/totalClock;
+		returnStruct->P_rtr2pe[0] = (float)returnStruct->rtr2pe[0]/(float)totalClock;
+		returnStruct->P_rtr2pe[1] = (float)returnStruct->rtr2pe[1]/(float)totalClock;
 
-		returnStruct->P_PEIO[0] = (float)returnStruct->PEIO[0]/totalClock;
-		returnStruct->P_PEIO[1] = (float)returnStruct->PEIO[1]/totalClock;
-		returnStruct->P_PEinc = (float)returnStruct->PEinc/totalClock;
+		returnStruct->P_PEIO[0] = (float)returnStruct->PEIO[0]/(float)totalClock;
+		returnStruct->P_PEIO[1] = (float)returnStruct->PEIO[1]/(float)totalClock;
+		returnStruct->P_PEinc = (float)returnStruct->PEinc/(float)totalClock;
 
-		returnStruct->P_rtr2rtrE[0] = routers[1]->linkNotEmpty[router::WEST]/totalClock;
-		returnStruct->P_rtr2rtrW[0] = routers[0]->linkNotEmpty[router::EAST]/totalClock;
+		returnStruct->P_rtr2rtrE[0] = routers[1]->linkNotEmpty[router::WEST]/(float)totalClock;
+		returnStruct->P_rtr2rtrW[0] = routers[0]->linkNotEmpty[router::EAST]/(float)totalClock;
 
 		return;
 	}

@@ -95,18 +95,54 @@ void PE_inc::fire()
 	//increase counter for P1_Q1
 	firedTimes[0]++;
 }
-void PE_base::init()
+void PE_inc::init()
 {
 	linkNotEmpty = 0;
 	firedTimes[0] = 0;
 	firedTimes[1] = 0;
-	
+	//initialize queue size files
 	char filename[256];
 	sprintf(filename, "PE_%d_%d_OutQueue.txt", x_, y_);
 	ofstream initmyfile;
 	initmyfile.open(filename, ios::trunc);
 	initmyfile<<endl;
 	initmyfile.close();
+	//initialize utilization files
+	char filenameUtil[2][256];
+	sprintf(filenameUtil[0], "PE_%d_%d_UtilProc.txt", x_, y_);
+	sprintf(filenameUtil[1], "PE_%d_%d_UtilLinkIn.txt", x_, y_);
+	for(int i=0; i<2; i++)
+	{
+		ofstream initmyfile;
+		initmyfile.open(filenameUtil[i], ios::trunc);
+		initmyfile<<endl;
+		initmyfile.close();
+	}
+}
+void PE_IO::init()
+{
+	linkNotEmpty = 0;
+	firedTimes[0] = 0;
+	firedTimes[1] = 0;
+	//initialize queue size files
+	char filename[256];
+	sprintf(filename, "PE_%d_%d_OutQueue.txt", x_, y_);
+	ofstream initmyfile;
+	initmyfile.open(filename, ios::trunc);
+	initmyfile<<endl;
+	initmyfile.close();
+	//initialize utilization files
+	char filenameUtil[3][256];
+	sprintf(filenameUtil[0], "PE_%d_%d_UtilProcI.txt", x_, y_);
+	sprintf(filenameUtil[1], "PE_%d_%d_UtilProcO.txt", x_, y_);
+	sprintf(filenameUtil[2], "PE_%d_%d_UtilLinkIn.txt", x_, y_);
+	for(int i=0; i<3; i++)
+	{
+		ofstream initmyfileU;
+		initmyfileU.open(filenameUtil[i], ios::trunc);
+		initmyfileU<<endl;
+		initmyfileU.close();
+	}
 }
 void PE_base::getQueueSize(int * size)
 {
@@ -125,5 +161,46 @@ void PE_base::queueSize2File()
 	myfile<<size<<endl;
 	myfile.close();
 }
+void PE_inc::utilization2File()
+{
+	float util[2] = {0};
+	float utilOfinc = (float)firedTimes[0]/(float)internalClock;
+	float utilOfLink = (float)linkNotEmpty/(float)internalClock;
+	util[0] = utilOfinc;
+	util[1] = utilOfLink;
+
+	char filename[2][256];
+	sprintf(filename[0], "PE_%d_%d_UtilProc.txt", x_, y_);
+	sprintf(filename[1], "PE_%d_%d_UtilLinkIn.txt", x_, y_);
+
+	for(int i=0; i<2; i++)
+	{
+		ofstream myfile(filename[i], ios::app);
+		myfile<<util[i]<<endl;
+		myfile.close();
+	}
+}
+void PE_IO::utilization2File()
+{
+	float util[3] = {0};
+	float utilOfPI = (float)firedTimes[0]/(float)internalClock;
+	float utilOfPO = (float)firedTimes[1]/(float)internalClock;
+	float utilOfLink = (float)linkNotEmpty/(float)internalClock;
+	util[0] = utilOfPI;
+	util[1] = utilOfPO;
+	util[2] = utilOfLink;
+	char filename[3][256];
+	sprintf(filename[0], "PE_%d_%d_UtilProcI.txt", x_, y_);
+	sprintf(filename[1], "PE_%d_%d_UtilProcO.txt", x_, y_);
+	sprintf(filename[2], "PE_%d_%d_UtilLinkIn.txt", x_, y_);
+
+	for(int i=0; i<3; i++)
+	{
+		ofstream myfile(filename[i], ios::app);
+		myfile<<util[i]<<endl;
+		myfile.close();
+	}
+}
+
 
 
