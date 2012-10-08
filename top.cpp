@@ -224,5 +224,11 @@ int sc_main(int argc , char *argv[])
 	printf("Utilization Rate for C-Link pe_to_router[1]: %%%3.2f\n", P1_Q1->P_pe2rtr[1]*100);
 	printf("Utilization Rate for C-Link router_to_router_wast[0]: %%%3.2f\n", P1_Q1->P_rtr2rtrW[0]*100);
 	printf("Utilization Rate for C-Link router_to_pe[0]: %%%3.2f\n", P1_Q1->P_rtr2pe[0]*100);
+
+	//Question 2
+
+
+
+
 	return 0;
 }

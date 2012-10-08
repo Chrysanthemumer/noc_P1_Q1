@@ -19,10 +19,13 @@ void sc_trace(sc_trace_file *tf, const packet &p, const std::string &name)
 
 void router::main()
 {
+	internalClock++;
 	assert((x_ != -1) && (y_ != -1)); // to identify PE
 
 	for (int iport = 0; iport < PORTS; ++iport)
 		read_packet(iport);
+
+	queueSize2File();
 
 	for (int iport = 0; iport < PORTS; ++iport)
 		write_packet(iport);
@@ -99,4 +102,46 @@ void router::init()
 	linkNotEmpty[EAST] = 0;
 	linkNotEmpty[WEST] = 0;
 
+	char filename[5][256];
+	sprintf(filename[0], "router_%d_%d_OutQueue_PE.txt", x_, y_);
+	sprintf(filename[1], "router_%d_%d_OutQueue_NORTH.txt", x_, y_);
+	sprintf(filename[2], "router_%d_%d_OutQueue_SOUTH.txt", x_, y_);
+	sprintf(filename[3], "router_%d_%d_OutQueue_EAST.txt", x_, y_);
+	sprintf(filename[4], "router_%d_%d_OutQueue_WEST.txt", x_, y_);
+
+	for(int i=0;i<5;i++)
+	{
+	ofstream initmyfile;
+	initmyfile.open(filename[i], ios::trunc);
+	initmyfile<<endl;
+	initmyfile.close();
+	}
+
+}
+void router::getQueueSize(int * size)
+{
+		for(int i = 0;i<5;i++)
+	{
+		size[i] = (int)out_queue_[i].size();
+	}
+}
+void router::queueSize2File()
+{
+	int size[5]={0};
+	getQueueSize(size);
+
+	char filename[5][256];
+	sprintf(filename[0], "router_%d_%d_OutQueue_PE.txt", x_, y_);
+	sprintf(filename[1], "router_%d_%d_OutQueue_NORTH.txt", x_, y_);
+	sprintf(filename[2], "router_%d_%d_OutQueue_SOUTH.txt", x_, y_);
+	sprintf(filename[3], "router_%d_%d_OutQueue_EAST.txt", x_, y_);
+	sprintf(filename[4], "router_%d_%d_OutQueue_WEST.txt", x_, y_);
+
+	
+	for(int i=0;i<5;i++)
+	{
+	ofstream myfile(filename[i], ios::app);
+	myfile<<size[i]<<endl;
+	myfile.close();
+	}
 }

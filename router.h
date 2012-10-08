@@ -40,7 +40,7 @@ SC_MODULE(router)
 	void main(); // specify the functionality of router per clock cycle
 
 	SC_CTOR(router)
-		: x_(-1), y_(-1)
+		: x_(-1), y_(-1), internalClock(0)
 	{
 		SC_METHOD(main);
 		sensitive << clock.pos();
@@ -55,11 +55,15 @@ SC_MODULE(router)
 	void init();
 	//counters for P1_Q1
 	int linkNotEmpty[PORTS];
+	//functions for P1_Q2
+	void getQueueSize(int * size);
+	void queueSize2File();
 
 protected:
 	std::list<packet> out_queue_[PORTS]; // output queues
 	
 	int x_, y_; // location of the router
+	int internalClock;
 
 	void read_packet(int iport); // read a packet from the link
 	void write_packet(int iport); // write a packet to the link

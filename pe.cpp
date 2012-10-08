@@ -100,4 +100,30 @@ void PE_base::init()
 	linkNotEmpty = 0;
 	firedTimes[0] = 0;
 	firedTimes[1] = 0;
+	
+	char filename[256];
+	sprintf(filename, "PE_%d_%d_OutQueue.txt", x_, y_);
+	ofstream initmyfile;
+	initmyfile.open(filename, ios::trunc);
+	initmyfile<<endl;
+	initmyfile.close();
 }
+void PE_base::getQueueSize(int * size)
+{
+	*size = (int)out_queue_.size();
+}
+void PE_base::queueSize2File()
+{
+	int size(0);
+	int * sizep = &size;
+	getQueueSize(sizep);
+
+	char filename[256];
+	sprintf(filename, "PE_%d_%d_OutQueue.txt", x_, y_);
+	ofstream myfile;
+	myfile.open(filename, ios::app);
+	myfile<<size<<endl;
+	myfile.close();
+}
+
+

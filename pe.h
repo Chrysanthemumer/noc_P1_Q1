@@ -12,13 +12,15 @@ SC_MODULE(PE_base)
 
 	void main() // specify the functionality of PE per clock cycle
 	{
+		internalClock++;
 		read_input();
 		execute();
+		queueSize2File();//the queue size shall be calculated after read before write
 		write_output();
 	}
 
 	SC_CTOR(PE_base)
-		: x_(-1), y_(-1)
+		: x_(-1), y_(-1), internalClock(0)
 	{
 		SC_METHOD(main);
 		sensitive << clock.pos();
@@ -41,12 +43,16 @@ SC_MODULE(PE_base)
 	int firedTimes[2];
 	int linkNotEmpty;
 
+	//functions for P1_Q2
+	void getQueueSize(int * size);
+	void queueSize2File();
+
 protected:
 	std::list<packet> out_queue_; // output queue
 	packet packet_in_; // incoming packet from the router
 
 	int x_, y_; // location of the PE
-
+	int internalClock;
 	virtual void read_input(); // read a packet from the the router
 	virtual void execute() = 0; // abstraction of computations
 	virtual void write_output(); // // send a packet to the router
