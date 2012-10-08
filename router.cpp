@@ -29,6 +29,8 @@ void router::main()
 
 	for (int iport = 0; iport < PORTS; ++iport)
 		write_packet(iport);
+
+	utilization2File();
 }
 
 void router::set_xy(int x, int y)
@@ -108,13 +110,26 @@ void router::init()
 	sprintf(filename[2], "router_%d_%d_OutQueue_SOUTH.txt", x_, y_);
 	sprintf(filename[3], "router_%d_%d_OutQueue_EAST.txt", x_, y_);
 	sprintf(filename[4], "router_%d_%d_OutQueue_WEST.txt", x_, y_);
-
 	for(int i=0;i<5;i++)
 	{
 	ofstream initmyfile;
 	initmyfile.open(filename[i], ios::trunc);
 	initmyfile<<endl;
 	initmyfile.close();
+	}
+	//init util file
+	char filenameU[5][256];
+	sprintf(filenameU[0], "router_%d_%d_UtilLinkIn_PE.txt", x_, y_);
+	sprintf(filenameU[1], "router_%d_%d_UtilLinkIn_NORTH.txt", x_, y_);
+	sprintf(filenameU[2], "router_%d_%d_UtilLinkIn_SOUTH.txt", x_, y_);
+	sprintf(filenameU[3], "router_%d_%d_UtilLinkIn_EAST.txt", x_, y_);
+	sprintf(filenameU[4], "router_%d_%d_UtilLinkIn_WEST.txt", x_, y_);
+	for (int i=0; i<5;i++)
+	{
+		ofstream myfile;
+		myfile.open(filenameU[i], ios::trunc);
+		myfile<<endl;
+		myfile.close();
 	}
 
 }
@@ -143,5 +158,28 @@ void router::queueSize2File()
 	ofstream myfile(filename[i], ios::app);
 	myfile<<size[i]<<endl;
 	myfile.close();
+	}
+}
+void router::utilization2File()
+{
+	float util[5];
+	util[0] = (float)linkNotEmpty[0]/(float)internalClock;
+	util[1] = (float)linkNotEmpty[1]/(float)internalClock;
+	util[2] = (float)linkNotEmpty[2]/(float)internalClock;
+	util[3] = (float)linkNotEmpty[3]/(float)internalClock;
+	util[4] = (float)linkNotEmpty[4]/(float)internalClock;
+
+	char filename[5][256];
+	sprintf(filename[0], "router_%d_%d_UtilLinkIn_PE.txt", x_, y_);
+	sprintf(filename[1], "router_%d_%d_UtilLinkIn_NORTH.txt", x_, y_);
+	sprintf(filename[2], "router_%d_%d_UtilLinkIn_SOUTH.txt", x_, y_);
+	sprintf(filename[3], "router_%d_%d_UtilLinkIn_EAST.txt", x_, y_);
+	sprintf(filename[4], "router_%d_%d_UtilLinkIn_WEST.txt", x_, y_);
+
+	for (int i=0; i<5;i++)
+	{
+		ofstream myfile(filename[i], ios::app);
+		myfile<<util[i]<<endl;
+		myfile.close();
 	}
 }

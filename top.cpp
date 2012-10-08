@@ -88,7 +88,7 @@ public:
 
 		//calculate rates
 		returnStruct->P_pe2rtr[0] = (float)returnStruct->pe2rtr[0]/(float)totalClock;
-		returnStruct->P_pe2rtr[1] = (float)returnStruct->rtr2pe[0]/(float)totalClock;
+		returnStruct->P_pe2rtr[1] = (float)returnStruct->pe2rtr[1]/(float)totalClock;
 
 		returnStruct->P_rtr2pe[0] = (float)returnStruct->rtr2pe[0]/(float)totalClock;
 		returnStruct->P_rtr2pe[1] = (float)returnStruct->rtr2pe[1]/(float)totalClock;
@@ -190,7 +190,7 @@ protected:
 
 int sc_main(int argc , char *argv[])
 {
-	srand(0);
+	srand(time(NULL));
 
 	top top_module("top");
 
@@ -200,7 +200,7 @@ int sc_main(int argc , char *argv[])
 	printf("cycle  0 ================================\n");
 	sc_start(0, SC_NS);
 
-	for(int i = 1; i < 2000; i++){
+	for(int i = 1; i < 20; i++){
 		
 		printf("cycle %2d ================================\n", i);
 
@@ -212,7 +212,7 @@ int sc_main(int argc , char *argv[])
 
 	//Methods for Project 1
 	//Question 1
-	top_module.getUtilizationData(2000, P1_Q1);
+	top_module.getUtilizationData(20, P1_Q1);
 	printf("Utilization Rate for P1: %%%3.2f\n", P1_Q1->P_PEinc*100);
 	printf("Utilization Rate for PI: %%%3.2f\n", P1_Q1->P_PEIO[0]*100);
 	printf("Utilization Rate for PO: %%%3.2f\n", P1_Q1->P_PEIO[1]*100);

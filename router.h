@@ -58,6 +58,7 @@ SC_MODULE(router)
 	//functions for P1_Q2
 	void getQueueSize(int * size);
 	void queueSize2File();
+	void utilization2File();
 
 protected:
 	std::list<packet> out_queue_[PORTS]; // output queues

@@ -189,6 +189,7 @@ void PE_IO::utilization2File()
 	util[0] = utilOfPI;
 	util[1] = utilOfPO;
 	util[2] = utilOfLink;
+
 	char filename[3][256];
 	sprintf(filename[0], "PE_%d_%d_UtilProcI.txt", x_, y_);
 	sprintf(filename[1], "PE_%d_%d_UtilProcO.txt", x_, y_);
